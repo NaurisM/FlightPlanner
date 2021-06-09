@@ -12,7 +12,8 @@ namespace FlightPlanner.Models
 
         public static Flight AddFlight(Flight newFlight)
         {
-            newFlight.Id = ++_id;
+            newFlight.Id = _id;
+            _id++;
             AllFlights.Add(newFlight);
 
             return newFlight;
