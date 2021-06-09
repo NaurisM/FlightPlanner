@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace FlightPlanner.Models
 {
@@ -9,6 +10,8 @@ namespace FlightPlanner.Models
     {
         public string Country { get; set; }
         public string City { get; set; }
+
+        [JsonProperty("airport")]
         public string AirportCode { get; set; }
     }
 }
