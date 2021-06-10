@@ -10,16 +10,29 @@ using FlightPlanner.Models;
 
 namespace FlightPlanner.Controllers
 {
+    [BasicAuthentication]
     public class AdminApiController : ApiController
     {
-        [Route("admin-api/flights/{id}"), BasicAuthentication]
+        [Route("admin-api/flights/{id}")]
         public IHttpActionResult GetFlights(int id)
         {
             var flight = FlightStorage.FindFlight(id);
             return flight == null ? (IHttpActionResult) NotFound() : Ok();
         }
 
-        [Route("admin-api/flights"), BasicAuthentication]
+        [Route("admin-api/flights/{id}"), HttpDelete]
+        public IHttpActionResult DeleteFlights(int id)
+        {
+            var flight = FlightStorage.FindFlight(id);
+            if (flight != null)
+            {
+                FlightStorage.AllFlights.Remove(flight);
+            }
+
+            return Ok();
+        }
+
+        [Route("admin-api/flights")]
         public IHttpActionResult PutFlight(AddFlightRequest newFlight)
         {
             if(IsWrongValues(newFlight) || IsSameAirport(newFlight) || !IsTimeCorrect(newFlight))
