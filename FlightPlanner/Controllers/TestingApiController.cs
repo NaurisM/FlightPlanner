@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using FlightPlanner.Models;
 
 namespace FlightPlanner.Controllers
 {
@@ -12,6 +13,7 @@ namespace FlightPlanner.Controllers
         [Route("testing-api/clear"), HttpPost]
         public IHttpActionResult Clear()
         {
+            FlightStorage.AllFlights.Clear();
             return Ok();
         }
     }
