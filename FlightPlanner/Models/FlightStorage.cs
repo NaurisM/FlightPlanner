@@ -14,7 +14,7 @@ namespace FlightPlanner.Models
         {
             newFlight.Id = _id;
             _id++;
-            AllFlights.Add(newFlight);
+            AllFlights?.Add(newFlight);
 
             return newFlight;
         }
