@@ -166,6 +166,7 @@
     </Compile>
     <Compile Include="Models\AddFlightRequest.cs" />
     <Compile Include="Models\Airport.cs" />
+    <Compile Include="Models\AirportStorage.cs" />
     <Compile Include="Models\Flight.cs" />
     <Compile Include="Models\FlightStorage.cs" />
     <Compile Include="Models\PageResult.cs" />
