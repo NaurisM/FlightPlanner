@@ -157,6 +157,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Attributes\BasicAuthenticationAttribute.cs" />
     <Compile Include="Controllers\AdminApiController.cs" />
+    <Compile Include="Controllers\CustomerApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestingApiController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
