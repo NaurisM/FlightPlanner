@@ -14,10 +14,23 @@ namespace FlightPlanner.Models
             AllAirports.Add(airport);
         }
 
-        public static Airport FindAirport(string airportCode)
+        public static Airport[] FindAirport(string phrase)
         {
-            var result = AllAirports.FirstOrDefault(ap => ap.AirportCode.Contains(airportCode));
-            return result;
+            Airport[] airports = new Airport[1];
+            var str = phrase.ToLower().Trim();
+
+            foreach (var airport in AllAirports)
+            {
+                if (airport.Country.ToLower().Contains(str) ||
+                    airport.City.ToLower().Contains(str) ||
+                    airport.AirportCode.ToLower().Contains(str))
+                {
+                    airports[0] = airport;
+                    break;
+                }
+            }
+
+            return airports;
         }
     }
 }

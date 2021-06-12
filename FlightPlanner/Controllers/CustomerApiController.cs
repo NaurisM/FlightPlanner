@@ -11,9 +11,16 @@ namespace FlightPlanner.Controllers
     public class CustomerApiController : ApiController
     {
         [Route("api/airports/"), HttpGet]
-        public IHttpActionResult SearchAirports(string airport)
+        public IHttpActionResult SearchAirports(string search)
         {
-            return Ok();
+            var airport = AirportStorage.FindAirport(search);
+
+            if (airport[0] != null)
+            {
+                return Ok(airport);
+            }
+
+            return NotFound();
         }
 
         [Route("api/flights/search"), HttpPost]

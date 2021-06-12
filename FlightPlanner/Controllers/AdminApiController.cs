@@ -46,18 +46,28 @@ namespace FlightPlanner.Controllers
             }
 
             Flight output = new Flight();
-            output.From = new Airport
+            output.From = new Airport(newFlight.From.Country, newFlight.From.City, newFlight.From.AirportCode);
+            foreach (var ap in AirportStorage.AllAirports)
             {
-                AirportCode = newFlight.From.AirportCode, 
-                City = newFlight.From.City, 
-                Country = newFlight.From.Country
-            };
-            output.To = new Airport
+                if (newFlight.From.Country == ap.Country &&
+                    newFlight.From.City == ap.City &&
+                    newFlight.From.AirportCode == ap.AirportCode)
+                {
+                    break;
+                }
+            }
+            AirportStorage.AddAirport(output.From);
+            output.To = new Airport(newFlight.To.Country, newFlight.To.City, newFlight.To.AirportCode);
+            foreach (var ap in AirportStorage.AllAirports)
             {
-                AirportCode = newFlight.To.AirportCode,
-                City = newFlight.To.City,
-                Country = newFlight.To.Country
-            };
+                if (newFlight.To.Country == ap.Country &&
+                    newFlight.To.City == ap.City &&
+                    newFlight.To.AirportCode == ap.AirportCode)
+                {
+                    break;
+                }
+            }
+            AirportStorage.AddAirport(output.To);
             output.Carrier = newFlight.Carrier;
             output.DepartureTime = newFlight.DepartureTime;
             output.ArrivalTime = newFlight.ArrivalTime;
