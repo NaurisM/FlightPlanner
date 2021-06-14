@@ -47,22 +47,22 @@ namespace FlightPlanner.Controllers
 
             Flight output = new Flight();
             output.From = new Airport(newFlight.From.Country, newFlight.From.City, newFlight.From.AirportCode);
-            foreach (var ap in AirportStorage.AllAirports)
+            foreach (var ap in AirportStorage.AllAirports.ToList())
             {
-                if (newFlight.From.Country == ap.Country &&
-                    newFlight.From.City == ap.City &&
-                    newFlight.From.AirportCode == ap.AirportCode)
+                if (newFlight.From.Country == ap?.Country &&
+                    newFlight.From.City == ap?.City &&
+                    newFlight.From.AirportCode == ap?.AirportCode)
                 {
                     break;
                 }
             }
             AirportStorage.AddAirport(output.From);
             output.To = new Airport(newFlight.To.Country, newFlight.To.City, newFlight.To.AirportCode);
-            foreach (var ap in AirportStorage.AllAirports)
+            foreach (var ap in AirportStorage.AllAirports.ToList())
             {
-                if (newFlight.To.Country == ap.Country &&
-                    newFlight.To.City == ap.City &&
-                    newFlight.To.AirportCode == ap.AirportCode)
+                if (newFlight.To.Country == ap?.Country &&
+                    newFlight.To.City == ap?.City &&
+                    newFlight.To.AirportCode == ap?.AirportCode)
                 {
                     break;
                 }
@@ -79,16 +79,17 @@ namespace FlightPlanner.Controllers
 
         private bool IsSameFlight(AddFlightRequest newFlight)
         {
-            foreach (var flight in FlightStorage.AllFlights)
+            foreach (var flight in FlightStorage.AllFlights.ToList())
             {
-                if (newFlight.From.Country == flight.From.Country &&
-                    newFlight.From.City == flight.From.City &&
-                    newFlight.From.AirportCode == flight.From.AirportCode &&
-                    newFlight.To.Country == flight.To.Country &&
-                    newFlight.To.City == flight.To.City &&
-                    newFlight.To.AirportCode == flight.To.AirportCode &&
-                    newFlight.Carrier == flight.Carrier &&
-                    newFlight.DepartureTime == flight.DepartureTime &&
+                if (flight != null && 
+                    newFlight.From.Country == flight.From?.Country &&
+                    newFlight.From.City == flight.From?.City && 
+                    newFlight.From.AirportCode == flight.From?.AirportCode && 
+                    newFlight.To.Country == flight.To?.Country && 
+                    newFlight.To.City == flight.To?.City && 
+                    newFlight.To.AirportCode == flight.To?.AirportCode && 
+                    newFlight.Carrier == flight.Carrier && 
+                    newFlight.DepartureTime == flight.DepartureTime && 
                     newFlight.ArrivalTime == flight.ArrivalTime)
                 {
                     return true;

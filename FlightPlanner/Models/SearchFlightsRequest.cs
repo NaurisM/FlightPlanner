@@ -18,20 +18,20 @@ namespace FlightPlanner.Models
                 return true;
             }
 
-            return String.IsNullOrEmpty(flight.From) ||
-                   String.IsNullOrEmpty(flight.To) ||
-                   String.IsNullOrEmpty(flight.DepartureDate);
+            return string.IsNullOrEmpty(flight.From) ||
+                   string.IsNullOrEmpty(flight.To) ||
+                   string.IsNullOrEmpty(flight.DepartureDate);
         }
 
         public static object ReturnPageResults(SearchFlightsRequest flightRequest)
         {
-            PageResult<Flight> ResultList = new PageResult<Flight>();
+            PageResult<Flight> resultList = new PageResult<Flight>();
 
             var matchResult = FlightStorage.GetFlightRequest(flightRequest);
-            ResultList.Items = matchResult.ToArray();
-            ResultList.TotalItems = matchResult.Count;
-            ResultList.Page = matchResult.Any() ? 1 : 0;
-            return ResultList;
+            resultList.Items = matchResult.ToArray();
+            resultList.TotalItems = matchResult.Count;
+            resultList.Page = matchResult.Any() ? 1 : 0;
+            return resultList;
         }
     }
 }

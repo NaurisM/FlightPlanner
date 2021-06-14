@@ -19,11 +19,11 @@ namespace FlightPlanner.Models
             Airport[] airports = new Airport[1];
             var str = phrase.ToLower().Trim();
 
-            foreach (var airport in AllAirports)
+            foreach (var airport in AllAirports.ToList())
             {
-                if (airport.Country.ToLower().Contains(str) ||
-                    airport.City.ToLower().Contains(str) ||
-                    airport.AirportCode.ToLower().Contains(str))
+                if (airport != null && (airport.Country.ToLower().Contains(str) ||
+                                        airport.City.ToLower().Contains(str) ||
+                                        airport.AirportCode.ToLower().Contains(str)))
                 {
                     airports[0] = airport;
                     break;
