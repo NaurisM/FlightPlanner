@@ -13,68 +13,79 @@ namespace FlightPlanner.Controllers
     [BasicAuthentication]
     public class AdminApiController : ApiController
     {
+        private static readonly object _locker = new object();
+
         [Route("admin-api/flights/{id}")]
         public IHttpActionResult GetFlights(int id)
         {
-            var flight = FlightStorage.FindFlight(id);
-            return flight == null ? (IHttpActionResult) NotFound() : Ok();
+            lock (_locker)
+            {
+                var flight = FlightStorage.FindFlight(id);
+                return flight == null ? (IHttpActionResult)NotFound() : Ok();
+            }
         }
 
         [Route("admin-api/flights/{id}"), HttpDelete]
         public IHttpActionResult DeleteFlights(int id)
         {
-            var flight = FlightStorage.FindFlight(id);
-            if (flight != null)
+            lock (_locker)
             {
-                FlightStorage.AllFlights.Remove(flight);
-            }
+                var flight = FlightStorage.FindFlight(id);
+                if (flight != null)
+                {
+                    FlightStorage.AllFlights.Remove(flight);
+                }
 
-            return Ok();
+                return Ok();
+            }
         }
 
         [Route("admin-api/flights")]
         public IHttpActionResult PutFlight(AddFlightRequest newFlight)
         {
-            if(IsWrongValues(newFlight) || IsSameAirport(newFlight) || !IsTimeCorrect(newFlight))
+            lock (_locker)
             {
-                return BadRequest();
-            }
-
-            if (IsSameFlight(newFlight))
-            {
-                return Conflict();
-            }
-
-            Flight output = new Flight();
-            output.From = new Airport(newFlight.From.Country, newFlight.From.City, newFlight.From.AirportCode);
-            foreach (var ap in AirportStorage.AllAirports.ToList())
-            {
-                if (newFlight.From.Country == ap?.Country &&
-                    newFlight.From.City == ap?.City &&
-                    newFlight.From.AirportCode == ap?.AirportCode)
+                if (IsWrongValues(newFlight) || IsSameAirport(newFlight) || !IsTimeCorrect(newFlight))
                 {
-                    break;
+                    return BadRequest();
                 }
-            }
-            AirportStorage.AddAirport(output.From);
-            output.To = new Airport(newFlight.To.Country, newFlight.To.City, newFlight.To.AirportCode);
-            foreach (var ap in AirportStorage.AllAirports.ToList())
-            {
-                if (newFlight.To.Country == ap?.Country &&
-                    newFlight.To.City == ap?.City &&
-                    newFlight.To.AirportCode == ap?.AirportCode)
+
+                if (IsSameFlight(newFlight))
                 {
-                    break;
+                    return Conflict();
                 }
+
+                Flight output = new Flight();
+                output.From = new Airport(newFlight.From.Country, newFlight.From.City, newFlight.From.AirportCode);
+                foreach (var ap in AirportStorage.AllAirports.ToList())
+                {
+                    if (newFlight.From.Country == ap?.Country &&
+                        newFlight.From.City == ap?.City &&
+                        newFlight.From.AirportCode == ap?.AirportCode)
+                    {
+                        break;
+                    }
+                }
+                AirportStorage.AddAirport(output.From);
+                output.To = new Airport(newFlight.To.Country, newFlight.To.City, newFlight.To.AirportCode);
+                foreach (var ap in AirportStorage.AllAirports.ToList())
+                {
+                    if (newFlight.To.Country == ap?.Country &&
+                        newFlight.To.City == ap?.City &&
+                        newFlight.To.AirportCode == ap?.AirportCode)
+                    {
+                        break;
+                    }
+                }
+                AirportStorage.AddAirport(output.To);
+                output.Carrier = newFlight.Carrier;
+                output.DepartureTime = newFlight.DepartureTime;
+                output.ArrivalTime = newFlight.ArrivalTime;
+
+                FlightStorage.AddFlight(output);
+
+                return Created("", output);
             }
-            AirportStorage.AddAirport(output.To);
-            output.Carrier = newFlight.Carrier;
-            output.DepartureTime = newFlight.DepartureTime;
-            output.ArrivalTime = newFlight.ArrivalTime;
-
-            FlightStorage.AddFlight(output);
-
-            return Created("", output);
         }
 
         private bool IsSameFlight(AddFlightRequest newFlight)
