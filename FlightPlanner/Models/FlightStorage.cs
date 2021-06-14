@@ -23,5 +23,13 @@ namespace FlightPlanner.Models
         {
             return AllFlights.FirstOrDefault(fl => fl.Id == id);
         }
+
+        public static List<Flight> GetFlightRequest(SearchFlightsRequest request)
+        {
+            return AllFlights.Where(flight =>
+                flight.From.AirportCode == request.From &&
+                flight.To.AirportCode == request.To &&
+                DateTime.Parse(flight.DepartureTime).ToString() == request.DepartureDate).ToList();
+        }
     }
 }

@@ -24,15 +24,28 @@ namespace FlightPlanner.Controllers
         }
 
         [Route("api/flights/search"), HttpPost]
-        public IHttpActionResult SearchFlights(SearchFlightsRequest flight)
+        public IHttpActionResult SearchFlights(SearchFlightsRequest request)
         {
-            return Ok();
+            if (SearchFlightsRequest.IsNotValid(request))
+            {
+                return BadRequest();
+            }
+
+            var result = SearchFlightsRequest.ReturnPageResults(request);
+            return Ok(result);
         }
 
         [Route("api/flights/{id}"), HttpGet]
         public IHttpActionResult FindFlightById(int id)
         {
-            return Ok();
+            var flight = FlightStorage.FindFlight(id);
+
+            if (flight == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(flight);
         }
     }
 }
