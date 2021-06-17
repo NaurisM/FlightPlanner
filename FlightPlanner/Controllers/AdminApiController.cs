@@ -34,20 +34,20 @@ namespace FlightPlanner.Controllers
             }
         }
 
-        [Route("admin-api/flights/{id}"), HttpDelete]
-        public IHttpActionResult DeleteFlights(int id)
-        {
-            lock (_locker)
-            {
-                var flight = FlightStorage.FindFlight(id);
-                if (flight != null)
-                {
-                    FlightStorage.AllFlights.Remove(flight);
-                }
+        //[Route("admin-api/flights/{id}"), HttpDelete]
+        //public IHttpActionResult DeleteFlights(int id)
+        //{
+        //    lock (_locker)
+        //    {
+                //var flight = FlightStorage.FindFlight(id);
+                //if (flight != null)
+                //{
+                //    FlightStorage.AllFlights.Remove(flight);
+                //}
 
-                return Ok();
-            }
-        }
+                //return Ok();
+        //    }
+        //}
 
         [Route("admin-api/flights")]
         public IHttpActionResult PutFlight(AddFlightRequest newFlight)
@@ -59,10 +59,10 @@ namespace FlightPlanner.Controllers
                     return BadRequest();
                 }
 
-                if (IsSameFlight(newFlight))
-                {
-                    return Conflict();
-                }
+                //if (IsSameFlight(newFlight))
+                //{
+                //    return Conflict();
+                //}
 
                 Flight flight = new Flight();
                 flight.From = new Airport
@@ -80,7 +80,13 @@ namespace FlightPlanner.Controllers
                         break;
                     }
                 }
-                AirportStorage.AddAirport(flight.From);
+
+                using (var ctx = new FlightPlannerDbContext())
+                {
+                    ctx.Airports.Add(flight.From);
+                    ctx.SaveChanges();
+                }
+                //AirportStorage.AddAirport(flight.From);
                 flight.To = new Airport
                 {
                     Country = newFlight.To.Country,
@@ -96,12 +102,18 @@ namespace FlightPlanner.Controllers
                         break;
                     }
                 }
-                AirportStorage.AddAirport(flight.To);
+
+                using (var ctx = new FlightPlannerDbContext())
+                {
+                    ctx.Airports.Add(flight.To);
+                    ctx.SaveChanges();
+                }
+                //AirportStorage.AddAirport(flight.To);
                 flight.Carrier = newFlight.Carrier;
                 flight.DepartureTime = newFlight.DepartureTime;
                 flight.ArrivalTime = newFlight.ArrivalTime;
 
-                FlightStorage.AddFlight(flight);
+                //FlightStorage.AddFlight(flight);
                 using (var ctx = new FlightPlannerDbContext())
                 {
                     ctx.Flights.Add(flight);
@@ -111,27 +123,27 @@ namespace FlightPlanner.Controllers
             }
         }
 
-        private bool IsSameFlight(AddFlightRequest newFlight)
-        {
-            foreach (var flight in FlightStorage.AllFlights.ToList())
-            {
-                if (flight != null && 
-                    newFlight.From.Country == flight.From?.Country &&
-                    newFlight.From.City == flight.From?.City && 
-                    newFlight.From.AirportCode == flight.From?.AirportCode && 
-                    newFlight.To.Country == flight.To?.Country && 
-                    newFlight.To.City == flight.To?.City && 
-                    newFlight.To.AirportCode == flight.To?.AirportCode && 
-                    newFlight.Carrier == flight.Carrier && 
-                    newFlight.DepartureTime == flight.DepartureTime && 
-                    newFlight.ArrivalTime == flight.ArrivalTime)
-                {
-                    return true;
-                }
-            }
+        //private bool IsSameFlight(AddFlightRequest newFlight)
+        //{
+        //    foreach (var flight in FlightStorage.AllFlights.ToList())
+        //    {
+        //        if (flight != null && 
+        //            newFlight.From.Country == flight.From?.Country &&
+        //            newFlight.From.City == flight.From?.City && 
+        //            newFlight.From.AirportCode == flight.From?.AirportCode && 
+        //            newFlight.To.Country == flight.To?.Country && 
+        //            newFlight.To.City == flight.To?.City && 
+        //            newFlight.To.AirportCode == flight.To?.AirportCode && 
+        //            newFlight.Carrier == flight.Carrier && 
+        //            newFlight.DepartureTime == flight.DepartureTime && 
+        //            newFlight.ArrivalTime == flight.ArrivalTime)
+        //        {
+        //            return true;
+        //        }
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
 
         private bool IsWrongValues(AddFlightRequest newFlight)
         {
