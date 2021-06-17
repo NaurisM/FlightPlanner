@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Results;
 using FlightPlanner.Attributes;
+using FlightPlanner.DbContext;
 using FlightPlanner.Models;
 
 namespace FlightPlanner.Controllers
@@ -20,8 +22,15 @@ namespace FlightPlanner.Controllers
         {
             lock (_locker)
             {
-                var flight = FlightStorage.FindFlight(id);
-                return flight == null ? (IHttpActionResult)NotFound() : Ok();
+                using (var ctx = new FlightPlannerDbContext())
+                {
+                    var flight = ctx.Flights.Include(f => f.From).Include(f => f.To).SingleOrDefault(f => f.Id == id);
+                    if (flight == null)
+                        return NotFound();
+                    return Ok(flight);
+                }
+                //var flight = FlightStorage.FindFlight(id);
+                //return flight == null ? (IHttpActionResult)NotFound() : Ok();
             }
         }
 
@@ -55,8 +64,13 @@ namespace FlightPlanner.Controllers
                     return Conflict();
                 }
 
-                Flight output = new Flight();
-                output.From = new Airport(newFlight.From.Country, newFlight.From.City, newFlight.From.AirportCode);
+                Flight flight = new Flight();
+                flight.From = new Airport
+                {
+                    Country = newFlight.From.Country,
+                    City = newFlight.From.City,
+                    AirportCode = newFlight.From.AirportCode
+                };
                 foreach (var ap in AirportStorage.AllAirports.ToList())
                 {
                     if (newFlight.From.Country == ap?.Country &&
@@ -66,8 +80,13 @@ namespace FlightPlanner.Controllers
                         break;
                     }
                 }
-                AirportStorage.AddAirport(output.From);
-                output.To = new Airport(newFlight.To.Country, newFlight.To.City, newFlight.To.AirportCode);
+                AirportStorage.AddAirport(flight.From);
+                flight.To = new Airport
+                {
+                    Country = newFlight.To.Country,
+                    City = newFlight.To.City,
+                    AirportCode = newFlight.To.AirportCode
+                };
                 foreach (var ap in AirportStorage.AllAirports.ToList())
                 {
                     if (newFlight.To.Country == ap?.Country &&
@@ -77,14 +96,18 @@ namespace FlightPlanner.Controllers
                         break;
                     }
                 }
-                AirportStorage.AddAirport(output.To);
-                output.Carrier = newFlight.Carrier;
-                output.DepartureTime = newFlight.DepartureTime;
-                output.ArrivalTime = newFlight.ArrivalTime;
+                AirportStorage.AddAirport(flight.To);
+                flight.Carrier = newFlight.Carrier;
+                flight.DepartureTime = newFlight.DepartureTime;
+                flight.ArrivalTime = newFlight.ArrivalTime;
 
-                FlightStorage.AddFlight(output);
-
-                return Created("", output);
+                FlightStorage.AddFlight(flight);
+                using (var ctx = new FlightPlannerDbContext())
+                {
+                    ctx.Flights.Add(flight);
+                    ctx.SaveChanges();
+                }
+                return Created("", flight);
             }
         }
 
