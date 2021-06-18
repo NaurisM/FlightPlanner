@@ -34,20 +34,31 @@ namespace FlightPlanner.Controllers
             }
         }
 
-        //[Route("admin-api/flights/{id}"), HttpDelete]
-        //public IHttpActionResult DeleteFlights(int id)
-        //{
-        //    lock (_locker)
-        //    {
+        [Route("admin-api/flights/{id}"), HttpDelete]
+        public IHttpActionResult DeleteFlights(int id)
+        {
+            lock (_locker)
+            {
+
+                using (var ctx = new FlightPlannerDbContext())
+                {
+                    var flightToRemove = ctx.Flights.SingleOrDefault(x => x.Id == id);
+
+                    if (flightToRemove != null)
+                    {
+                        ctx.Flights.Remove(flightToRemove);
+                        ctx.SaveChanges();
+                    }
+                }
                 //var flight = FlightStorage.FindFlight(id);
                 //if (flight != null)
                 //{
                 //    FlightStorage.AllFlights.Remove(flight);
                 //}
 
-                //return Ok();
-        //    }
-        //}
+                return Ok();
+            }
+        }
 
         [Route("admin-api/flights")]
         public IHttpActionResult PutFlight(AddFlightRequest newFlight)
