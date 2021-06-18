@@ -17,6 +17,7 @@ namespace FlightPlanner.Controllers
             using (var ctx = new FlightPlannerDbContext())
             {
                 ctx.Flights.RemoveRange(ctx.Flights);
+                ctx.Airports.RemoveRange(ctx.Airports);
                 ctx.SaveChanges();
             }
             //FlightStorage.AllFlights.Clear();

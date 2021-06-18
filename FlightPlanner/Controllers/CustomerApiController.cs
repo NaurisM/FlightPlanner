@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using FlightPlanner.DbContext;
 using FlightPlanner.Models;
 
 namespace FlightPlanner.Controllers
@@ -17,14 +18,30 @@ namespace FlightPlanner.Controllers
         {
             lock (_locker)
             {
-                var airport = AirportStorage.FindAirport(search);
-
-                if (airport[0] != null)
+                using (var ctx = new FlightPlannerDbContext())
                 {
-                    return Ok(airport);
+                    search = search.ToLower().Trim();
+                    var apList = new List<Airport>();
+                    var airport = ctx.Airports.FirstOrDefault(ap => ap.Country.ToLower().Contains(search) ||
+                                                                     ap.City.ToLower().Contains(search) ||
+                                                                     ap.AirportCode.ToLower().Contains(search));
+                    if (airport != null)
+                    {
+                        apList.Add(airport);
+                        return Ok(apList);
+                    }
+
+                    return NotFound();
                 }
 
-                return NotFound();
+                //var airport = AirportStorage.FindAirport(search);
+
+                //if (airport[0] != null)
+                //{
+                //    return Ok(airport);
+                //}
+
+                //return NotFound();
             }
         }
 

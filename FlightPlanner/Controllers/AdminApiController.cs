@@ -9,6 +9,7 @@ using System.Web.Http.Results;
 using FlightPlanner.Attributes;
 using FlightPlanner.DbContext;
 using FlightPlanner.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace FlightPlanner.Controllers
 {
@@ -82,20 +83,25 @@ namespace FlightPlanner.Controllers
                     City = newFlight.From.City,
                     AirportCode = newFlight.From.AirportCode
                 };
-                foreach (var ap in AirportStorage.AllAirports.ToList())
-                {
-                    if (newFlight.From.Country == ap?.Country &&
-                        newFlight.From.City == ap?.City &&
-                        newFlight.From.AirportCode == ap?.AirportCode)
-                    {
-                        break;
-                    }
-                }
+                //foreach (var ap in AirportStorage.AllAirports.ToList())
+                //{
+                //    if (newFlight.From.Country == ap?.Country &&
+                //        newFlight.From.City == ap?.City &&
+                //        newFlight.From.AirportCode == ap?.AirportCode)
+                //    {
+                //        break;
+                //    }
+                //}
 
                 using (var ctx = new FlightPlannerDbContext())
                 {
-                    ctx.Airports.Add(flight.From);
-                    ctx.SaveChanges();
+                    if (ctx.Airports.All(ap => newFlight.From.Country != ap.Country &&
+                                               newFlight.From.City != ap.City &&
+                                               newFlight.From.AirportCode != ap.AirportCode))
+                    {
+                        ctx.Airports.Add(flight.From);
+                        ctx.SaveChanges();
+                    }
                 }
                 //AirportStorage.AddAirport(flight.From);
                 flight.To = new Airport
@@ -104,20 +110,25 @@ namespace FlightPlanner.Controllers
                     City = newFlight.To.City,
                     AirportCode = newFlight.To.AirportCode
                 };
-                foreach (var ap in AirportStorage.AllAirports.ToList())
-                {
-                    if (newFlight.To.Country == ap?.Country &&
-                        newFlight.To.City == ap?.City &&
-                        newFlight.To.AirportCode == ap?.AirportCode)
-                    {
-                        break;
-                    }
-                }
+                //foreach (var ap in AirportStorage.AllAirports.ToList())
+                //{
+                //    if (newFlight.To.Country == ap?.Country &&
+                //        newFlight.To.City == ap?.City &&
+                //        newFlight.To.AirportCode == ap?.AirportCode)
+                //    {
+                //        break;
+                //    }
+                //}
 
                 using (var ctx = new FlightPlannerDbContext())
                 {
-                    ctx.Airports.Add(flight.To);
-                    ctx.SaveChanges();
+                    if (ctx.Airports.All(ap => newFlight.To.Country != ap.Country &&
+                                               newFlight.To.City != ap.City &&
+                                               newFlight.To.AirportCode != ap.AirportCode))
+                    {
+                        ctx.Airports.Add(flight.To);
+                        ctx.SaveChanges();
+                    }
                 }
                 //AirportStorage.AddAirport(flight.To);
                 flight.Carrier = newFlight.Carrier;
