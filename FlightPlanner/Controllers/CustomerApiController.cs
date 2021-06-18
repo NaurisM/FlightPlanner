@@ -45,35 +45,38 @@ namespace FlightPlanner.Controllers
             }
         }
 
-        //[Route("api/flights/search"), HttpPost]
-        //public IHttpActionResult SearchFlights(SearchFlightsRequest request)
-        //{
-        //    lock (_locker)
-        //    {
-        //        if (SearchFlightsRequest.IsNotValid(request))
-        //        {
-        //            return BadRequest();
-        //        }
-        //
-        //        var result = SearchFlightsRequest.ReturnPageResults(request);
-        //        return Ok(result);
-        //    }
-        //}
+        [Route("api/flights/search"), HttpPost]
+        public IHttpActionResult SearchFlights(SearchFlightsRequest request)
+        {
+            lock (_locker)
+            {
+                if (SearchFlightsRequest.IsNotValid(request))
+                {
+                    return BadRequest();
+                }
+        
+                var result = SearchFlightsRequest.ReturnPageResults(request);
+                return Ok(result);
+            }
+        }
 
-        //[Route("api/flights/{id}"), HttpGet]
-        //public IHttpActionResult FindFlightById(int id)
-        //{
-        //    lock (_locker)
-        //    {
-        //        var flight = FlightStorage.FindFlight(id);
+        [Route("api/flights/{id}"), HttpGet]
+        public IHttpActionResult FindFlightById(int id)
+        {
+            lock (_locker)
+            {
+                using (var ctx = new FlightPlannerDbContext())
+                {
+                    var flight = ctx.Flights.SingleOrDefault(f => f.Id == id);
 
-        //        if (flight == null)
-        //        {
-        //            return NotFound();
-        //        }
+                    if (flight == null)
+                    {
+                        return NotFound();
+                    }
 
-        //        return Ok(flight);
-        //    }
-        //}
+                    return Ok(flight);
+                }
+            }
+        }
     }
 }
