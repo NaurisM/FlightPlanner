@@ -116,6 +116,18 @@ namespace FlightPlanner.Controllers
                 //FlightStorage.AddFlight(flight);
                 using (var ctx = new FlightPlannerDbContext())
                 {
+                    if (ctx.Flights.Any(f => newFlight.From.Country == f.From.Country &&
+                                             newFlight.From.City == f.From.City &&
+                                             newFlight.From.AirportCode  == f.From.AirportCode &&
+                                             newFlight.To.Country == f.To.Country &&
+                                             newFlight.To.City == f.To.City && 
+                                             newFlight.To.AirportCode == f.To.AirportCode &&
+                                             newFlight.Carrier == f.Carrier &&
+                                             newFlight.DepartureTime == f.DepartureTime &&
+                                             newFlight.ArrivalTime == f.ArrivalTime))
+                    {
+                        return Conflict();
+                    }
                     ctx.Flights.Add(flight);
                     ctx.SaveChanges();
                 }
