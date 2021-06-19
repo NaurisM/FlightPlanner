@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -67,7 +68,7 @@ namespace FlightPlanner.Controllers
             {
                 using (var ctx = new FlightPlannerDbContext())
                 {
-                    var flight = ctx.Flights.SingleOrDefault(f => f.Id == id);
+                    var flight = ctx.Flights.Include(f => f.From).Include(f => f.To).SingleOrDefault(f => f.Id == id);
 
                     if (flight == null)
                     {
