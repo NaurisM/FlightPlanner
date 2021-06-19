@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using FlightPlanner.DbContext;
-using FlightPlanner.Models;
 
 namespace FlightPlanner.Controllers
 {
@@ -20,8 +14,7 @@ namespace FlightPlanner.Controllers
                 ctx.Airports.RemoveRange(ctx.Airports);
                 ctx.SaveChanges();
             }
-            //FlightStorage.AllFlights.Clear();
-            //AirportStorage.AllAirports.Clear();
+            
             return Ok();
         }
     }

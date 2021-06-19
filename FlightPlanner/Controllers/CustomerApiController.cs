@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using FlightPlanner.DbContext;
 using FlightPlanner.Models;
@@ -34,15 +31,6 @@ namespace FlightPlanner.Controllers
 
                     return NotFound();
                 }
-
-                //var airport = AirportStorage.FindAirport(search);
-
-                //if (airport[0] != null)
-                //{
-                //    return Ok(airport);
-                //}
-
-                //return NotFound();
             }
         }
 

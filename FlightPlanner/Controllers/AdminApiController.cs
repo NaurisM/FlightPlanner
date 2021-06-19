@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Results;
 using FlightPlanner.Attributes;
 using FlightPlanner.DbContext;
 using FlightPlanner.Models;
-using Microsoft.Ajax.Utilities;
 
 namespace FlightPlanner.Controllers
 {
@@ -30,8 +25,6 @@ namespace FlightPlanner.Controllers
                         return NotFound();
                     return Ok(flight);
                 }
-                //var flight = FlightStorage.FindFlight(id);
-                //return flight == null ? (IHttpActionResult)NotFound() : Ok();
             }
         }
 
@@ -51,11 +44,6 @@ namespace FlightPlanner.Controllers
                         ctx.SaveChanges();
                     }
                 }
-                //var flight = FlightStorage.FindFlight(id);
-                //if (flight != null)
-                //{
-                //    FlightStorage.AllFlights.Remove(flight);
-                //}
 
                 return Ok();
             }
@@ -71,11 +59,6 @@ namespace FlightPlanner.Controllers
                     return BadRequest();
                 }
 
-                //if (IsSameFlight(newFlight))
-                //{
-                //    return Conflict();
-                //}
-
                 Flight flight = new Flight();
                 flight.From = new Airport
                 {
@@ -83,16 +66,7 @@ namespace FlightPlanner.Controllers
                     City = newFlight.From.City,
                     AirportCode = newFlight.From.AirportCode
                 };
-                //foreach (var ap in AirportStorage.AllAirports.ToList())
-                //{
-                //    if (newFlight.From.Country == ap?.Country &&
-                //        newFlight.From.City == ap?.City &&
-                //        newFlight.From.AirportCode == ap?.AirportCode)
-                //    {
-                //        break;
-                //    }
-                //}
-
+                
                 using (var ctx = new FlightPlannerDbContext())
                 {
                     if (ctx.Airports.All(ap => newFlight.From.Country != ap.Country &&
@@ -103,23 +77,14 @@ namespace FlightPlanner.Controllers
                         ctx.SaveChanges();
                     }
                 }
-                //AirportStorage.AddAirport(flight.From);
+                
                 flight.To = new Airport
                 {
                     Country = newFlight.To.Country,
                     City = newFlight.To.City,
                     AirportCode = newFlight.To.AirportCode
                 };
-                //foreach (var ap in AirportStorage.AllAirports.ToList())
-                //{
-                //    if (newFlight.To.Country == ap?.Country &&
-                //        newFlight.To.City == ap?.City &&
-                //        newFlight.To.AirportCode == ap?.AirportCode)
-                //    {
-                //        break;
-                //    }
-                //}
-
+             
                 using (var ctx = new FlightPlannerDbContext())
                 {
                     if (ctx.Airports.All(ap => newFlight.To.Country != ap.Country &&
@@ -130,12 +95,11 @@ namespace FlightPlanner.Controllers
                         ctx.SaveChanges();
                     }
                 }
-                //AirportStorage.AddAirport(flight.To);
+                
                 flight.Carrier = newFlight.Carrier;
                 flight.DepartureTime = newFlight.DepartureTime;
                 flight.ArrivalTime = newFlight.ArrivalTime;
 
-                //FlightStorage.AddFlight(flight);
                 using (var ctx = new FlightPlannerDbContext())
                 {
                     if (ctx.Flights.Any(f => newFlight.From.Country == f.From.Country &&
@@ -156,28 +120,6 @@ namespace FlightPlanner.Controllers
                 return Created("", flight);
             }
         }
-
-        //private bool IsSameFlight(AddFlightRequest newFlight)
-        //{
-        //    foreach (var flight in FlightStorage.AllFlights.ToList())
-        //    {
-        //        if (flight != null && 
-        //            newFlight.From.Country == flight.From?.Country &&
-        //            newFlight.From.City == flight.From?.City && 
-        //            newFlight.From.AirportCode == flight.From?.AirportCode && 
-        //            newFlight.To.Country == flight.To?.Country && 
-        //            newFlight.To.City == flight.To?.City && 
-        //            newFlight.To.AirportCode == flight.To?.AirportCode && 
-        //            newFlight.Carrier == flight.Carrier && 
-        //            newFlight.DepartureTime == flight.DepartureTime && 
-        //            newFlight.ArrivalTime == flight.ArrivalTime)
-        //        {
-        //            return true;
-        //        }
-        //    }
-
-        //    return false;
-        //}
 
         private bool IsWrongValues(AddFlightRequest newFlight)
         {

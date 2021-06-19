@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace FlightPlanner.Models
 {
@@ -15,12 +11,5 @@ namespace FlightPlanner.Models
 
         [JsonProperty("airport")]
         public string AirportCode { get; set; }
-
-        //public Airport(string country, string city, string airportCode)
-        //{
-        //    Country = country;
-        //    City = city;
-        //    AirportCode = airportCode;
-        //}
     }
 }

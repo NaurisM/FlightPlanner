@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace FlightPlanner.Models
+﻿namespace FlightPlanner.Models
 {
     public class PageResult<T>
     {

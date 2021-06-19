@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using FlightPlanner.DbContext;
 
 namespace FlightPlanner.Models
@@ -44,10 +42,6 @@ namespace FlightPlanner.Models
                                             flight.DepartureTime.Substring(0, 10) == request.DepartureDate)
                                             .ToList();
             }
-
-            //return AllFlights.Where(flight => flight.From.AirportCode == request.From &&
-            //flight.To.AirportCode == request.To &&
-            //flight.DepartureTime.Substring(0, 10) == request.DepartureDate);
         }
     }
 }
