@@ -123,7 +123,7 @@ namespace FlightPlanner.Controllers
 
         private bool IsWrongValues(AddFlightRequest newFlight)
         {
-            if (newFlight.From == null ||
+            return (newFlight.From == null ||
                 string.IsNullOrEmpty(newFlight.From?.Country) ||
                 string.IsNullOrEmpty(newFlight.From?.City) ||
                 string.IsNullOrEmpty(newFlight.From?.AirportCode) ||
@@ -133,22 +133,12 @@ namespace FlightPlanner.Controllers
                 string.IsNullOrEmpty(newFlight.To?.AirportCode) ||
                 string.IsNullOrEmpty(newFlight.Carrier) ||
                 string.IsNullOrEmpty(newFlight.DepartureTime) ||
-                string.IsNullOrEmpty(newFlight.ArrivalTime))
-            {
-                return true;
-            }
-
-            return false;
+                string.IsNullOrEmpty(newFlight.ArrivalTime));
         }
 
         private bool IsSameAirport(AddFlightRequest newFlight)
         {
-            if (newFlight.From.AirportCode.ToLower().Trim() == newFlight.To.AirportCode.ToLower().Trim())
-            {
-                return true;
-            }
-
-            return false;
+            return (newFlight.From.AirportCode.ToLower().Trim() == newFlight.To.AirportCode.ToLower().Trim());
         }
 
         private bool IsTimeCorrect(AddFlightRequest newFlight)
