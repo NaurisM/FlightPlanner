@@ -53,26 +53,8 @@ namespace FlightPlanner.Controllers
 
                 Flight output = new Flight();
                 output.From = new Airport(newFlight.From.Country, newFlight.From.City, newFlight.From.AirportCode);
-                foreach (var ap in AirportStorage.AllAirports.ToList())
-                {
-                    if (newFlight.From.Country == ap?.Country &&
-                        newFlight.From.City == ap?.City &&
-                        newFlight.From.AirportCode == ap?.AirportCode)
-                    {
-                        break;
-                    }
-                }
                 AirportStorage.AddAirport(output.From);
                 output.To = new Airport(newFlight.To.Country, newFlight.To.City, newFlight.To.AirportCode);
-                foreach (var ap in AirportStorage.AllAirports.ToList())
-                {
-                    if (newFlight.To.Country == ap?.Country &&
-                        newFlight.To.City == ap?.City &&
-                        newFlight.To.AirportCode == ap?.AirportCode)
-                    {
-                        break;
-                    }
-                }
                 AirportStorage.AddAirport(output.To);
                 output.Carrier = newFlight.Carrier;
                 output.DepartureTime = newFlight.DepartureTime;
@@ -88,19 +70,16 @@ namespace FlightPlanner.Controllers
         {
             foreach (var flight in FlightStorage.AllFlights.ToList())
             {
-                if (flight != null && 
-                    newFlight.From.Country == flight.From?.Country &&
-                    newFlight.From.City == flight.From?.City && 
-                    newFlight.From.AirportCode == flight.From?.AirportCode && 
-                    newFlight.To.Country == flight.To?.Country && 
-                    newFlight.To.City == flight.To?.City && 
-                    newFlight.To.AirportCode == flight.To?.AirportCode && 
-                    newFlight.Carrier == flight.Carrier && 
-                    newFlight.DepartureTime == flight.DepartureTime && 
-                    newFlight.ArrivalTime == flight.ArrivalTime)
-                {
-                    return true;
-                }
+                return (flight != null &&
+                        newFlight.From.Country == flight.From?.Country &&
+                        newFlight.From.City == flight.From?.City &&
+                        newFlight.From.AirportCode == flight.From?.AirportCode &&
+                        newFlight.To.Country == flight.To?.Country &&
+                        newFlight.To.City == flight.To?.City &&
+                        newFlight.To.AirportCode == flight.To?.AirportCode &&
+                        newFlight.Carrier == flight.Carrier &&
+                        newFlight.DepartureTime == flight.DepartureTime &&
+                        newFlight.ArrivalTime == flight.ArrivalTime);
             }
 
             return false;
@@ -108,32 +87,22 @@ namespace FlightPlanner.Controllers
 
         private bool IsWrongValues(AddFlightRequest newFlight)
         {
-            if (newFlight.From == null ||
-                string.IsNullOrEmpty(newFlight.From?.Country) ||
-                string.IsNullOrEmpty(newFlight.From?.City) ||
-                string.IsNullOrEmpty(newFlight.From?.AirportCode) ||
-                newFlight.To == null ||
-                string.IsNullOrEmpty(newFlight.To?.Country) ||
-                string.IsNullOrEmpty(newFlight.To?.City) ||
-                string.IsNullOrEmpty(newFlight.To?.AirportCode) ||
-                string.IsNullOrEmpty(newFlight.Carrier) ||
-                string.IsNullOrEmpty(newFlight.DepartureTime) ||
-                string.IsNullOrEmpty(newFlight.ArrivalTime))
-            {
-                return true;
-            }
-
-            return false;
+            return (newFlight.From == null ||
+                    string.IsNullOrEmpty(newFlight.From?.Country) ||
+                    string.IsNullOrEmpty(newFlight.From?.City) ||
+                    string.IsNullOrEmpty(newFlight.From?.AirportCode) ||
+                    newFlight.To == null ||
+                    string.IsNullOrEmpty(newFlight.To?.Country) ||
+                    string.IsNullOrEmpty(newFlight.To?.City) ||
+                    string.IsNullOrEmpty(newFlight.To?.AirportCode) ||
+                    string.IsNullOrEmpty(newFlight.Carrier) ||
+                    string.IsNullOrEmpty(newFlight.DepartureTime) ||
+                    string.IsNullOrEmpty(newFlight.ArrivalTime));
         }
 
         private bool IsSameAirport(AddFlightRequest newFlight)
         {
-            if (newFlight.From.AirportCode.ToLower().Trim() == newFlight.To.AirportCode.ToLower().Trim())
-            {
-                return true;
-            }
-
-            return false;
+            return (newFlight.From.AirportCode.ToLower().Trim() == newFlight.To.AirportCode.ToLower().Trim());
         }
 
         private bool IsTimeCorrect(AddFlightRequest newFlight)
