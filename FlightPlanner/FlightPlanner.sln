@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightPlanner", "FlightPlan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightPlanner.Core", "..\FlightPlanner.Core\FlightPlanner.Core.csproj", "{574ACBD9-4ABE-400E-8194-876D2648F52D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightPlanner.Core.Services", "..\FlightPlanner.Core.Services\FlightPlanner.Core.Services.csproj", "{9D970D23-64F4-4F8A-B9DC-C63BFFE82A16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightPlanner.Core.Data", "..\FlightPlanner.Core.Data\FlightPlanner.Core.Data.csproj", "{2446E548-050B-4159-8355-C138BBA0500B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{574ACBD9-4ABE-400E-8194-876D2648F52D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{574ACBD9-4ABE-400E-8194-876D2648F52D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{574ACBD9-4ABE-400E-8194-876D2648F52D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D970D23-64F4-4F8A-B9DC-C63BFFE82A16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D970D23-64F4-4F8A-B9DC-C63BFFE82A16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D970D23-64F4-4F8A-B9DC-C63BFFE82A16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D970D23-64F4-4F8A-B9DC-C63BFFE82A16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2446E548-050B-4159-8355-C138BBA0500B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2446E548-050B-4159-8355-C138BBA0500B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2446E548-050B-4159-8355-C138BBA0500B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2446E548-050B-4159-8355-C138BBA0500B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
