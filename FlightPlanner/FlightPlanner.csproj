@@ -298,6 +298,12 @@
     <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.6.0.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FlightPlanner.Core\FlightPlanner.Core.csproj">
+      <Project>{574ACBD9-4ABE-400E-8194-876D2648F52D}</Project>
+      <Name>FlightPlanner.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
