@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web.Http;
-using FlightPlanner.Core.Models;
-using FlightPlanner.Models;
+﻿using System.Web.Http;
+using FlightPlanner.Core.Dto;
 
 namespace FlightPlanner.Controllers
 {
@@ -39,13 +35,13 @@ namespace FlightPlanner.Controllers
         {
             lock (_locker)
             {
-                if (SearchFlightsRequest.IsNotValid(request))
-                {
-                    return BadRequest();
-                }
+                //if (SearchFlightsRequest.IsNotValid(request))
+                //{
+                //    return BadRequest();
+                //}
         
-                var result = SearchFlightsRequest.ReturnPageResults(request);
-                return Ok(result);
+                //var result = SearchFlightsRequest.ReturnPageResults(request);
+                return Ok(/*result*/);
             }
         }
 

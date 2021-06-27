@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
 using FlightPlanner.Attributes;
+using FlightPlanner.Core.Dto;
 using FlightPlanner.Core.Models;
 using FlightPlanner.Core.Services;
 using FlightPlanner.Models;
@@ -14,10 +16,12 @@ namespace FlightPlanner.Controllers
     {
         //private static readonly object _locker = new object();
         private readonly IFlightService _flightService;
+        private readonly IEnumerable<IAddFlightRequestValidator> _validators;
 
-        public AdminApiController(IFlightService flightService)
+        public AdminApiController(IFlightService flightService, IEnumerable<IAddFlightRequestValidator> validators)
         {
             _flightService = flightService;
+            _validators = validators;
         }
 
         [Route("admin-api/flights/{id}")]
@@ -62,105 +66,26 @@ namespace FlightPlanner.Controllers
         }
 
         [Route("admin-api/flights")]
-        public IHttpActionResult PutFlight(AddFlightRequest newFlight)
+        public IHttpActionResult PutFlight(AddFlightRequest request)
         {
             //lock (_locker)
             //{
-                if (IsWrongValues(newFlight) || IsSameAirport(newFlight) || !IsTimeCorrect(newFlight))
-                {
+                if (!_validators.All(v => v.Validate(request)))
                     return BadRequest();
-                }
 
-                Flight flight = new Flight();
-                flight.From = new Airport
+                Flight flight = new Flight
                 {
-                    Country = newFlight.From.Country,
-                    City = newFlight.From.City,
-                    AirportCode = newFlight.From.AirportCode
+                    From = request.From,
+                    To = request.To,
+                    Carrier = request.Carrier,
+                    DepartureTime = request.DepartureTime,
+                    ArrivalTime = request.ArrivalTime
                 };
-                
-                //using (var ctx = new FlightPlannerDbContext())
-                //{
-                //    if (ctx.Airports.All(ap => newFlight.From.Country != ap.Country &&
-                //                               newFlight.From.City != ap.City &&
-                //                               newFlight.From.AirportCode != ap.AirportCode))
-                //    {
-                //        ctx.Airports.Add(flight.From);
-                //        ctx.SaveChanges();
-                //    }
-                //}
-                
-                flight.To = new Airport
-                {
-                    Country = newFlight.To.Country,
-                    City = newFlight.To.City,
-                    AirportCode = newFlight.To.AirportCode
-                };
-             
-                //using (var ctx = new FlightPlannerDbContext())
-                //{
-                //    if (ctx.Airports.All(ap => newFlight.To.Country != ap.Country &&
-                //                               newFlight.To.City != ap.City &&
-                //                               newFlight.To.AirportCode != ap.AirportCode))
-                //    {
-                //        ctx.Airports.Add(flight.To);
-                //        ctx.SaveChanges();
-                //    }
-                //}
-                
-                flight.Carrier = newFlight.Carrier;
-                flight.DepartureTime = newFlight.DepartureTime;
-                flight.ArrivalTime = newFlight.ArrivalTime;
 
-                //using (var ctx = new FlightPlannerDbContext())
-                //{
-                //    if (ctx.Flights.Any(f => newFlight.From.Country == f.From.Country &&
-                //                             newFlight.From.City == f.From.City &&
-                //                             newFlight.From.AirportCode  == f.From.AirportCode &&
-                //                             newFlight.To.Country == f.To.Country &&
-                //                             newFlight.To.City == f.To.City && 
-                //                             newFlight.To.AirportCode == f.To.AirportCode &&
-                //                             newFlight.Carrier == f.Carrier &&
-                //                             newFlight.DepartureTime == f.DepartureTime &&
-                //                             newFlight.ArrivalTime == f.ArrivalTime))
-                //    {
-                //        return Conflict();
-                //    }
-                //    ctx.Flights.Add(flight);
-                //    ctx.SaveChanges();
-                
                 _flightService.Create(flight);
 
                 return Created("", flight);
             //}
-        }
-
-        private bool IsWrongValues(AddFlightRequest newFlight)
-        {
-            return (newFlight.From == null ||
-                string.IsNullOrEmpty(newFlight.From?.Country) ||
-                string.IsNullOrEmpty(newFlight.From?.City) ||
-                string.IsNullOrEmpty(newFlight.From?.AirportCode) ||
-                newFlight.To == null ||
-                string.IsNullOrEmpty(newFlight.To?.Country) ||
-                string.IsNullOrEmpty(newFlight.To?.City) ||
-                string.IsNullOrEmpty(newFlight.To?.AirportCode) ||
-                string.IsNullOrEmpty(newFlight.Carrier) ||
-                string.IsNullOrEmpty(newFlight.DepartureTime) ||
-                string.IsNullOrEmpty(newFlight.ArrivalTime));
-        }
-
-        private bool IsSameAirport(AddFlightRequest newFlight)
-        {
-            return (newFlight.From.AirportCode.ToLower().Trim() == newFlight.To.AirportCode.ToLower().Trim());
-        }
-
-        private bool IsTimeCorrect(AddFlightRequest newFlight)
-        {
-            var departureTime = DateTime.Parse(newFlight.DepartureTime);
-            var arrivalTime = DateTime.Parse(newFlight.ArrivalTime);
-
-            return arrivalTime > departureTime;
         }
     }
 }

@@ -41,12 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\AddAirportRequest.cs" />
+    <Compile Include="Dto\AddFlightRequest.cs" />
+    <Compile Include="Dto\SearchFlightsRequest.cs" />
     <Compile Include="Models\Airport.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Flight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IEntityService.cs" />
     <Compile Include="Services\IFlightService.cs" />
+    <Compile Include="Services\IAddFlightRequestValidator.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

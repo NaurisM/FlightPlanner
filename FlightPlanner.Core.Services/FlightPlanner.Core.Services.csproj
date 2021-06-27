@@ -51,6 +51,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Validators\AirportCodesValidator.cs" />
+    <Compile Include="Validators\AirportFromValidator.cs" />
+    <Compile Include="Validators\AirportToValidator.cs" />
+    <Compile Include="Validators\AirportValidator.cs" />
+    <Compile Include="Validators\ArrivalDatValidator.cs" />
+    <Compile Include="Validators\CarrierValidator.cs" />
+    <Compile Include="Validators\DatesIntervalValidator.cs" />
+    <Compile Include="Validators\DepartureDateValidator.cs" />
     <Compile Include="EntityService.cs" />
     <Compile Include="FlightService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,6 +80,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
