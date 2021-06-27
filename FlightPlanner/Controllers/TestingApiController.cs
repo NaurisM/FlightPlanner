@@ -1,5 +1,5 @@
 ﻿using System.Web.Http;
-using FlightPlanner.DbContext;
+using FlightPlanner.Core.Data;
 
 namespace FlightPlanner.Controllers
 {
@@ -8,12 +8,12 @@ namespace FlightPlanner.Controllers
         [Route("testing-api/clear"), HttpPost]
         public IHttpActionResult Clear()
         {
-            using (var ctx = new FlightPlannerDbContext())
-            {
-                ctx.Flights.RemoveRange(ctx.Flights);
-                ctx.Airports.RemoveRange(ctx.Airports);
-                ctx.SaveChanges();
-            }
+            //using (var ctx = new FlightPlannerDbContext())
+            //{
+            //    ctx.Flights.RemoveRange(ctx.Flights);
+            //    ctx.Airports.RemoveRange(ctx.Airports);
+            //    ctx.SaveChanges();
+            //}
             
             return Ok();
         }

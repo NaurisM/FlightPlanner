@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using FlightPlanner.DbContext;
+using System.Web.Http.Results;
+using FlightPlanner.Core.Models;
 
 namespace FlightPlanner.Models
 {
@@ -35,13 +36,14 @@ namespace FlightPlanner.Models
 
         public static List<Flight> GetFlightRequest(SearchFlightsRequest request)
         {
-            using (var ctx = new FlightPlannerDbContext())
-            {
-                return ctx.Flights.Where(flight => flight.From.AirportCode == request.From &&
-                                            flight.To.AirportCode == request.To &&
-                                            flight.DepartureTime.Substring(0, 10) == request.DepartureDate)
-                                            .ToList();
-            }
+            //using (var ctx = new FlightPlannerDbContext())
+            //{
+            //    return ctx.Flights.Where(flight => flight.From.AirportCode == request.From &&
+            //                                flight.To.AirportCode == request.To &&
+            //                                flight.DepartureTime.Substring(0, 10) == request.DepartureDate)
+            //                                .ToList();
+            //}
+            return null;
         }
     }
 }

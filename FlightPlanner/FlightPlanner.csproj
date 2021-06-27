@@ -143,6 +143,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructuremapMvc.cs" />
+    <Compile Include="App_Start\StructuremapWebApi.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
@@ -182,6 +183,8 @@
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />
     <Compile Include="DependencyResolution\StructureMapScopeModule.cs" />
+    <Compile Include="DependencyResolution\StructureMapWebApiDependencyResolver.cs" />
+    <Compile Include="DependencyResolution\StructureMapWebApiDependencyScope.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -299,6 +302,14 @@
     <Content Include="Scripts\jquery-3.6.0.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FlightPlanner.Core.Data\FlightPlanner.Core.Data.csproj">
+      <Project>{2446e548-050b-4159-8355-c138bba0500b}</Project>
+      <Name>FlightPlanner.Core.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FlightPlanner.Core.Services\FlightPlanner.Core.Services.csproj">
+      <Project>{9d970d23-64f4-4f8a-b9dc-c63bffe82a16}</Project>
+      <Name>FlightPlanner.Core.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FlightPlanner.Core\FlightPlanner.Core.csproj">
       <Project>{574ACBD9-4ABE-400E-8194-876D2648F52D}</Project>
       <Name>FlightPlanner.Core</Name>

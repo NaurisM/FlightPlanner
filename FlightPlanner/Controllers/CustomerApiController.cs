@@ -2,7 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
-using FlightPlanner.DbContext;
+using FlightPlanner.Core.Models;
 using FlightPlanner.Models;
 
 namespace FlightPlanner.Controllers
@@ -16,21 +16,21 @@ namespace FlightPlanner.Controllers
         {
             lock (_locker)
             {
-                using (var ctx = new FlightPlannerDbContext())
-                {
-                    search = search.ToLower().Trim();
-                    var apList = new List<Airport>();
-                    var airport = ctx.Airports.FirstOrDefault(ap => ap.Country.ToLower().Contains(search) ||
-                                                                     ap.City.ToLower().Contains(search) ||
-                                                                     ap.AirportCode.ToLower().Contains(search));
-                    if (airport != null)
-                    {
-                        apList.Add(airport);
-                        return Ok(apList);
-                    }
+                //using (var ctx = new FlightPlannerDbContext())
+                //{
+                //    search = search.ToLower().Trim();
+                //    var apList = new List<Airport>();
+                //    var airport = ctx.Airports.FirstOrDefault(ap => ap.Country.ToLower().Contains(search) ||
+                //                                                     ap.City.ToLower().Contains(search) ||
+                //                                                     ap.AirportCode.ToLower().Contains(search));
+                //    if (airport != null)
+                //    {
+                //        apList.Add(airport);
+                //        return Ok(apList);
+                //    }
 
                     return NotFound();
-                }
+                //}
             }
         }
 
@@ -54,17 +54,17 @@ namespace FlightPlanner.Controllers
         {
             lock (_locker)
             {
-                using (var ctx = new FlightPlannerDbContext())
-                {
-                    var flight = ctx.Flights.Include(f => f.From).Include(f => f.To).SingleOrDefault(f => f.Id == id);
+                //using (var ctx = new FlightPlannerDbContext())
+                //{
+                //    var flight = ctx.Flights.Include(f => f.From).Include(f => f.To).SingleOrDefault(f => f.Id == id);
 
-                    if (flight == null)
-                    {
-                        return NotFound();
-                    }
+                //    if (flight == null)
+                //    {
+                //        return NotFound();
+                //    }
 
-                    return Ok(flight);
-                }
+                    return Ok();
+                //}
             }
         }
     }
