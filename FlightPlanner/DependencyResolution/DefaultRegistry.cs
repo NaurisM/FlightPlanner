@@ -15,6 +15,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using FlightPlanner.Core.Data;
 using FlightPlanner.Core.Services;
 using StructureMap;
 
@@ -33,7 +34,10 @@ namespace FlightPlanner.DependencyResolution {
 					scan.With(new ControllerConvention());
                 });
             //For<IExample>().Use<Example>();
-            For(typeof(IEntityService<>)).Use(typeof(IEntityService<>));
+            For(typeof(IEntityService<>)).Use(typeof(EntityService<>));
+            For<IFlightService>().Use<FlightService>();
+            For<IAirportService>().Use<AirportService>();
+            For<IFlightPlannerDbContext>().Use<FlightPlannerDbContext>();
         }
 
         #endregion
