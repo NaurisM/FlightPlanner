@@ -40,7 +40,10 @@ namespace FlightPlanner.DependencyResolution {
 
         public void ScanTypes(TypeSet types, Registry registry)
         {
-            throw new NotImplementedException();
+            foreach (var type in types.AllTypes())
+            {
+                Process(type,registry);
+            }
         }
     }
 }
