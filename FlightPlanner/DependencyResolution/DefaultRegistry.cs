@@ -15,6 +15,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using AutoMapper;
+using FlightPlanner.App_Start;
 using FlightPlanner.Core.Data;
 using FlightPlanner.Core.Services;
 using StructureMap;
@@ -33,7 +35,8 @@ namespace FlightPlanner.DependencyResolution {
                     scan.WithDefaultConventions();
 					scan.With(new ControllerConvention());
                 });
-            //For<IExample>().Use<Example>();
+            var config = AutoMapperConfig.GetMapper();
+            For<IMapper>().Use(config);
             For(typeof(IEntityService<>)).Use(typeof(EntityService<>));
             For<IFlightService>().Use<FlightService>();
             For<IAirportService>().Use<AirportService>();
