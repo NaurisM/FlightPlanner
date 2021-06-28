@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AirportService.cs" />
     <Compile Include="Validators\AirportCodesValidator.cs" />
     <Compile Include="Validators\AirportFromValidator.cs" />
     <Compile Include="Validators\AirportToValidator.cs" />
