@@ -2,7 +2,7 @@
 
 namespace FlightPlanner.Core.Services.Validators
 {
-    public class ArrivalDatValidator : IAddFlightRequestValidator
+    public class ArrivalDatValidator : IFlightRequestValidator
     {
         public bool Validate(AddFlightRequest request)
         {

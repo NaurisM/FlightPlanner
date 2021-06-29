@@ -16,9 +16,9 @@ namespace FlightPlanner.Controllers
     {
         //private static readonly object _locker = new object();
         private readonly IFlightService _flightService;
-        private readonly IEnumerable<IAddFlightRequestValidator> _validators;
+        private readonly IEnumerable<IFlightRequestValidator> _validators;
 
-        public AdminApiController(IFlightService flightService, IEnumerable<IAddFlightRequestValidator> validators)
+        public AdminApiController(IFlightService flightService, IEnumerable<IFlightRequestValidator> validators)
         {
             _flightService = flightService;
             _validators = validators;

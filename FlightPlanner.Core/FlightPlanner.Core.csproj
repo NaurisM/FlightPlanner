@@ -79,7 +79,7 @@
     <Compile Include="Services\IAirportService.cs" />
     <Compile Include="Services\IEntityService.cs" />
     <Compile Include="Services\IFlightService.cs" />
-    <Compile Include="Services\IAddFlightRequestValidator.cs" />
+    <Compile Include="Services\IFlightRequestValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

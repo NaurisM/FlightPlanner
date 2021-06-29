@@ -3,7 +3,7 @@ using FlightPlanner.Core.Dto;
 
 namespace FlightPlanner.Core.Services.Validators
 {
-    public class DatesIntervalValidator : IAddFlightRequestValidator
+    public class DatesIntervalValidator : IFlightRequestValidator
 
     {
         public bool Validate(AddFlightRequest request)

@@ -2,7 +2,7 @@
 
 namespace FlightPlanner.Core.Services.Validators
 {
-    public class AirportCodesValidator : IAddFlightRequestValidator
+    public class AirportCodesValidator : IFlightRequestValidator
     {
         public bool Validate(AddFlightRequest request)
         {
