@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
+using AutoMapper;
 using FlightPlanner.Attributes;
 using FlightPlanner.Core.Dto;
 using FlightPlanner.Core.Models;
@@ -18,7 +19,7 @@ namespace FlightPlanner.Controllers
         private readonly IFlightService _flightService;
         private readonly IEnumerable<IFlightRequestValidator> _validators;
 
-        public AdminApiController(IFlightService flightService, IEnumerable<IFlightRequestValidator> validators)
+        public AdminApiController(IFlightService flightService, IEnumerable<IFlightRequestValidator> validators, IMapper mapper)
         {
             _flightService = flightService;
             _validators = validators;

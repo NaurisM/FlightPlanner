@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using FlightPlanner.Core.Models;
-
-namespace FlightPlanner.Core.Dto
+﻿namespace FlightPlanner.Core.Dto
 {
     public class SearchFlightsRequest
     {
