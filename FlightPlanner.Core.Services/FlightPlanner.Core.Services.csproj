@@ -56,7 +56,7 @@
     <Compile Include="Validators\AirportFromValidator.cs" />
     <Compile Include="Validators\AirportToValidator.cs" />
     <Compile Include="Validators\AirportValidator.cs" />
-    <Compile Include="Validators\ArrivalDatValidator.cs" />
+    <Compile Include="Validators\ArrivalDateValidator.cs" />
     <Compile Include="Validators\CarrierValidator.cs" />
     <Compile Include="Validators\DatesIntervalValidator.cs" />
     <Compile Include="Validators\DepartureDateValidator.cs" />
