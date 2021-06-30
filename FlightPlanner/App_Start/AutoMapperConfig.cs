@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using FlightPlanner.Core.Dto;
 using FlightPlanner.Core.Models;
-using FlightPlanner.Models;
 
 namespace FlightPlanner.App_Start
 {
@@ -10,26 +10,26 @@ namespace FlightPlanner.App_Start
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<AirportRequest, Airport>()
+                cfg.CreateMap<AddAirportRequest, Airport>()
                     .ForMember(d => d.AirportCode,
                         s =>
                             s.MapFrom(p => p.Airport))
                     .ForMember(d => d.Id,
                         s => s.Ignore());
-                cfg.CreateMap<Airport, AirportRequest>()
+                cfg.CreateMap<Airport, AddAirportRequest>()
                     .ForMember(d => d.Airport,
                         s =>
                             s.MapFrom(p => p.AirportCode));
-                cfg.CreateMap<AirportResponse, AirportRequest>()
+                cfg.CreateMap<AddAirportResponse, AddAirportRequest>()
                     .ForMember(d => d.Id,
                         opt =>
                             opt.Ignore());
-                cfg.CreateMap<AirportRequest, AirportResponse>();
-                cfg.CreateMap<Airport, AirportResponse>()
+                cfg.CreateMap<AddAirportRequest, AddAirportResponse>();
+                cfg.CreateMap<Airport, AddAirportResponse>()
                     .ForMember(m => m.Airport,
                         opt =>
                             opt.MapFrom(s => s.AirportCode));
-                cfg.CreateMap<AirportResponse, Airport>()
+                cfg.CreateMap<AddAirportResponse, Airport>()
                     .ForMember(m => m.Id,
                         opt =>
                             opt.Ignore())

@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dto\AddAirportRequest.cs" />
+    <Compile Include="Dto\AddAirportResponse.cs" />
     <Compile Include="Dto\AddFlightRequest.cs" />
     <Compile Include="Dto\SearchFlightsRequest.cs" />
     <Compile Include="Models\Airport.cs" />
