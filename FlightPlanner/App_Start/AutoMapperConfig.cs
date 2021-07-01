@@ -10,6 +10,10 @@ namespace FlightPlanner.App_Start
         {
             var config = new MapperConfiguration(cfg =>
             {
+                cfg.CreateMap<AddFlightRequest, Flight>();
+                cfg.CreateMap<Flight, AddFlightRequest>();
+                cfg.CreateMap<AddFlightRequest, AddFlightResponse>();
+                cfg.CreateMap<Flight, AddFlightResponse>();
                 cfg.CreateMap<AddAirportRequest, Airport>()
                     .ForMember(d => d.AirportCode,
                         s =>

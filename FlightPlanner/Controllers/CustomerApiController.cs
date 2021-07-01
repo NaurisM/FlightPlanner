@@ -1,17 +1,17 @@
 ﻿using System.Web.Http;
 using FlightPlanner.Core.Dto;
 
-namespace FlightPlanner.Controllers
-{
-    public class CustomerApiController : ApiController
-    {
-        private static readonly object _locker = new object();
+//namespace FlightPlanner.Controllers
+//{
+    //public class CustomerApiController : ApiController
+    //{
+        //private static readonly object _locker = new object();
 
-        [Route("api/airports/"), HttpGet]
-        public IHttpActionResult SearchAirports(string search)
-        {
-            lock (_locker)
-            {
+        //[Route("api/airports/"), HttpGet]
+        //public IHttpActionResult SearchAirports(string search)
+        //{
+            //lock (_locker)
+            ///{
                 //using (var ctx = new FlightPlannerDbContext())
                 //{
                 //    search = search.ToLower().Trim();
@@ -25,31 +25,31 @@ namespace FlightPlanner.Controllers
                 //        return Ok(apList);
                 //    }
 
-                    return NotFound();
+                //    return NotFound();
                 //}
-            }
-        }
+            //}
+            //}
 
-        [Route("api/flights/search"), HttpPost]
-        public IHttpActionResult SearchFlights(SearchFlightsRequest request)
-        {
-            lock (_locker)
-            {
+        //[Route("api/flights/search"), HttpPost]
+        //public IHttpActionResult SearchFlights(SearchFlightsRequest request)
+        //{
+            //lock (_locker)
+            //{
                 //if (SearchFlightsRequest.IsNotValid(request))
                 //{
                 //    return BadRequest();
                 //}
         
                 //var result = SearchFlightsRequest.ReturnPageResults(request);
-                return Ok(/*result*/);
-            }
-        }
+                //return Ok(/*result*/);
+            //}
+        //}
 
-        [Route("api/flights/{id}"), HttpGet]
-        public IHttpActionResult FindFlightById(int id)
-        {
-            lock (_locker)
-            {
+        //[Route("api/flights/{id}"), HttpGet]
+        //public IHttpActionResult FindFlightById(int id)
+        //{
+        //    lock (_locker)
+        //   {
                 //using (var ctx = new FlightPlannerDbContext())
                 //{
                 //    var flight = ctx.Flights.Include(f => f.From).Include(f => f.To).SingleOrDefault(f => f.Id == id);
@@ -59,9 +59,9 @@ namespace FlightPlanner.Controllers
                 //        return NotFound();
                 //    }
 
-                    return Ok();
+                //    return Ok();
                 //}
-            }
-        }
-    }
-}
+            //}
+        //}
+    //}
+//}

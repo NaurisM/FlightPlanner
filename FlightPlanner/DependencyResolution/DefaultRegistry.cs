@@ -22,10 +22,9 @@ using FlightPlanner.Core.Services;
 using FlightPlanner.Core.Services.Validators;
 using StructureMap;
 
-namespace FlightPlanner.DependencyResolution {
-    using StructureMap.Configuration.DSL;
-    using StructureMap.Graph;
-	
+namespace FlightPlanner.DependencyResolution
+{
+
     public class DefaultRegistry : Registry {
         #region Constructors and Destructors
 

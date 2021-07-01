@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using AutoMapper;
+using FlightPlanner.App_Start;
 using FlightPlanner.Attributes;
+using FlightPlanner.Core.Data;
 using FlightPlanner.Core.Dto;
 using FlightPlanner.Core.Models;
 using FlightPlanner.Core.Services;
-using FlightPlanner.Models;
 
 namespace FlightPlanner.Controllers
 {
@@ -18,20 +17,21 @@ namespace FlightPlanner.Controllers
         //private static readonly object _locker = new object();
         private readonly IFlightService _flightService;
         private readonly IEnumerable<IFlightRequestValidator> _validators;
+        private IMapper _mapper = AutoMapperConfig.GetMapper();
 
-        public AdminApiController(IFlightService flightService, IEnumerable<IFlightRequestValidator> validators, IMapper mapper)
+        public AdminApiController(IFlightService flightService, IEnumerable<IFlightRequestValidator> validators)
         {
             _flightService = flightService;
             _validators = validators;
         }
 
-        [Route("admin-api/flights/{id}")]
+        [Route("admin-api/flights/{id}"), HttpGet]
         public IHttpActionResult GetFlights(int id)
         {
-            var flight = _flightService.GetFullFlight(id);
+            var flight = _flightService.GetFullFlight(id); 
 
             if (flight != null)
-                return Ok(flight);
+                return Ok(_mapper.Map(flight, new AddFlightResponse()));
             return NotFound();
             //lock (_locker)
             //{
@@ -66,7 +66,7 @@ namespace FlightPlanner.Controllers
             //}
         }
 
-        [Route("admin-api/flights")]
+        [Route("admin-api/flights"), HttpPut]
         public IHttpActionResult PutFlight(AddFlightRequest request)
         {
             //lock (_locker)
@@ -74,13 +74,23 @@ namespace FlightPlanner.Controllers
                 if (!_validators.All(v => v.Validate(request)))
                     return BadRequest();
 
-                Flight flight = new Flight
+                Flight flight = new Flight();
                 {
-                    From = request.From,
-                    To = request.To,
-                    Carrier = request.Carrier,
-                    DepartureTime = request.DepartureTime,
-                    ArrivalTime = request.ArrivalTime
+                    flight.From = new Airport
+                    {
+                        Country = request.From.Country,
+                        City = request.From.City,
+                        AirportCode = request.From.AirportCode
+                    };
+                    flight.To = new Airport
+                    {
+                        Country = request.To.Country,
+                        City = request.To.City,
+                        AirportCode = request.To.AirportCode
+                    };
+                    flight.Carrier = request.Carrier;
+                    flight.DepartureTime = request.DepartureTime;
+                    flight.ArrivalTime = request.ArrivalTime;
                 };
 
                 _flightService.Create(flight);
