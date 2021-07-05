@@ -5,6 +5,8 @@ namespace FlightPlanner.Core.Services
     public interface IFlightService : IEntityService<Flight>
     {
         Flight GetFullFlight(int id);
+
+        void DeleteAllFlights();
     }
 }
  

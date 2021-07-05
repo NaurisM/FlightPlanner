@@ -9,7 +9,7 @@ namespace FlightPlanner.Core.Services
     public class EntityService<T> : IEntityService<T> where T : Entity
     {
         protected readonly IFlightPlannerDbContext _context;
-
+        
         public EntityService(IFlightPlannerDbContext context)
         {
             _context = context;

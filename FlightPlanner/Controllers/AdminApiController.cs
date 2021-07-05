@@ -17,8 +17,7 @@ namespace FlightPlanner.Controllers
         //private static readonly object _locker = new object();
         private readonly IFlightService _flightService;
         private readonly IEnumerable<IFlightRequestValidator> _validators;
-        private IMapper _mapper = AutoMapperConfig.GetMapper();
-
+        private readonly IMapper _mapper = AutoMapperConfig.GetMapper();
         public AdminApiController(IFlightService flightService, IEnumerable<IFlightRequestValidator> validators)
         {
             _flightService = flightService;
@@ -74,23 +73,28 @@ namespace FlightPlanner.Controllers
                 if (!_validators.All(v => v.Validate(request)))
                     return BadRequest();
 
-                Flight flight = new Flight();
+                Flight flight = new Flight
                 {
-                    flight.From = new Airport
-                    {
-                        Country = request.From.Country,
-                        City = request.From.City,
-                        AirportCode = request.From.AirportCode
-                    };
-                    flight.To = new Airport
-                    {
-                        Country = request.To.Country,
-                        City = request.To.City,
-                        AirportCode = request.To.AirportCode
-                    };
-                    flight.Carrier = request.Carrier;
-                    flight.DepartureTime = request.DepartureTime;
-                    flight.ArrivalTime = request.ArrivalTime;
+                    From = request.From,
+                    To = request.To,
+                    Carrier = request.Carrier,
+                    DepartureTime = request.DepartureTime,
+                    ArrivalTime = request.ArrivalTime
+                    //flight.From = new Airport
+                    //{
+                    //    Country = request.From.Country,
+                    //    City = request.From.City,
+                    //    AirportCode = request.From.AirportCode
+                    //};
+                    //flight.To = new Airport
+                    //{
+                    //    Country = request.To.Country,
+                    //    City = request.To.City,
+                    //    AirportCode = request.To.AirportCode/
+                    //};
+                    //flight.Carrier = request.Carrier;
+                    //flight.DepartureTime = request.DepartureTime;
+                    //flight.ArrivalTime = request.ArrivalTime;
                 };
 
                 _flightService.Create(flight);

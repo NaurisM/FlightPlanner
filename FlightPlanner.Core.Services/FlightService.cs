@@ -8,7 +8,7 @@ namespace FlightPlanner.Core.Services
 {
     public class FlightService : EntityService<Flight>, IFlightService
     {
-        public FlightService(FlightPlannerDbContext context) : base(context)
+        public FlightService(IFlightPlannerDbContext context) : base(context)
         {
         }
 
@@ -17,6 +17,11 @@ namespace FlightPlanner.Core.Services
             return Query().Include(f => f.From)
                 .Include(f => f.To)
                 .SingleOrDefault(f => f.Id == id);
+        }
+
+        public void DeleteAllFlights()
+        {
+            _context.Flights.RemoveRange(_context.Flights);
         }
     }
 }

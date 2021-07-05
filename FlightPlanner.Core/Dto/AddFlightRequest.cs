@@ -2,7 +2,7 @@
 
 namespace FlightPlanner.Core.Dto
 {
-    public class AddFlightRequest
+    public class AddFlightRequest : Entity
     {
         public Airport From { get; set; }
         public Airport To { get; set; }

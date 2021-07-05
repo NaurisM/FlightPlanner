@@ -1,10 +1,13 @@
-﻿namespace FlightPlanner.Core.Dto
+﻿using FlightPlanner.Core.Models;
+
+namespace FlightPlanner.Core.Dto
 {
     public class AddFlightResponse
     {
-        public int Id { get; set; }
-        public string Country { get; set; }
-        public string City { get; set; }
-        public string Airport { get; set; }
+        public Airport From { get; set; }
+        public Airport To { get; set; }
+        public string Carrier { get; set; }
+        public string DepartureTime { get; set; }
+        public string ArrivalTime { get; set; }
     }
 }
