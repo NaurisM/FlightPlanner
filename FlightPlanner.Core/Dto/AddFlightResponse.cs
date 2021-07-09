@@ -2,10 +2,10 @@
 
 namespace FlightPlanner.Core.Dto
 {
-    public class AddFlightResponse
+    public class AddFlightResponse : Entity
     {
-        public AddAirportRequest From { get; set; }
-        public AddAirportRequest To { get; set; }
+        public AddAirportResponse From { get; set; }
+        public AddAirportResponse To { get; set; }
         public string Carrier { get; set; }
         public string DepartureTime { get; set; }
         public string ArrivalTime { get; set; }
