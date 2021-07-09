@@ -6,7 +6,7 @@ namespace FlightPlanner.Core.Services.Validators
     {
         public bool Validate(AddFlightRequest request)
         {
-            return !string.IsNullOrEmpty(request.DepartureTime);
+            return !string.IsNullOrEmpty(request?.DepartureTime);
         }
     }
 }

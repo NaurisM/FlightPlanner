@@ -1,4 +1,5 @@
-﻿using FlightPlanner.Core.Models;
+﻿using FlightPlanner.Core.Dto;
+using FlightPlanner.Core.Models;
 
 namespace FlightPlanner.Core.Services
 {
@@ -7,6 +8,10 @@ namespace FlightPlanner.Core.Services
         Flight GetFullFlight(int id);
 
         void DeleteAllFlights();
+
+        void DeleteAllAirports();
+
+        bool IsInDatabase(AddFlightRequest request);
     }
 }
  

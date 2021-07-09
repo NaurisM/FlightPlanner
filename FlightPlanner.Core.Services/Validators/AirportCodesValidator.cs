@@ -6,7 +6,7 @@ namespace FlightPlanner.Core.Services.Validators
     {
         public bool Validate(AddFlightRequest request)
         {
-            return request.From.AirportCode.ToLower().Trim() != request.To.AirportCode.ToLower().Trim();
+            return request?.From?.AirportCode?.ToLower().Trim() != request?.To?.AirportCode?.ToLower().Trim();
         }
     }
 }

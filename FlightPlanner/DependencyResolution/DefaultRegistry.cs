@@ -48,6 +48,7 @@ namespace FlightPlanner.DependencyResolution
             For<IFlightRequestValidator>().Use<CarrierValidator>();
             For<IFlightRequestValidator>().Use<DatesIntervalValidator>();
             For<IFlightRequestValidator>().Use<DepartureDateValidator>();
+            For<ISearchFlightRequestValidator>().Use<SearchFlightValidator>();
         }
 
         #endregion

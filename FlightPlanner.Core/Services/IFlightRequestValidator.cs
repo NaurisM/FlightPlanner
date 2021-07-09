@@ -1,5 +1,4 @@
 ﻿using FlightPlanner.Core.Dto;
-using FlightPlanner.Core.Models;
 
 namespace FlightPlanner.Core.Services
 {

@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Data.Entity.Infrastructure.Design;
+using System.Web.Http;
 using FlightPlanner.Core.Data;
 using FlightPlanner.Core.Services;
 
@@ -17,6 +18,7 @@ namespace FlightPlanner.Controllers
         public IHttpActionResult Clear()
         {
             _flightService.DeleteAllFlights();
+            _flightService.DeleteAllAirports();
             //using (var ctx = new FlightPlannerDbContext())
             //{
             //    ctx.Flights.RemoveRange(ctx.Flights);

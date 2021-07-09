@@ -6,7 +6,7 @@ namespace FlightPlanner.Core.Services.Validators
     {
         public bool Validate(AddFlightRequest request)
         {
-            return Validate(request.From);
+            return Validate(request?.From);
         }
     }
 }
