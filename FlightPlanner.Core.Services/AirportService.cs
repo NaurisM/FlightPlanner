@@ -13,6 +13,8 @@ namespace FlightPlanner.Core.Services
 
         public IEnumerable<Airport> GetAirports(string search)
         {
+            search = search.ToLower().Trim();
+
             var airports = Query().Where(a => a.Country.ToLower().Contains(search) ||
                                               a.City.ToLower().Contains(search) ||
                                               a.AirportCode.ToLower().Contains(search));
