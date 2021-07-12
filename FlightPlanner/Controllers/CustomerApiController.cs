@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using AutoMapper;
 using FlightPlanner.Core.Dto;
@@ -9,17 +10,20 @@ namespace FlightPlanner.Controllers
 {
     public class CustomerApiController : ApiController
     {
+        private readonly IFlightService _flightService;
         private readonly IAirportService _airportService;
         private readonly IPageResultService _pageResultService;
-        private readonly ISearchFlightRequestValidator _validator;
+        private readonly IEnumerable<ISearchFlightRequestValidator> _validators;
         private readonly IMapper _mapper;
 
-        public CustomerApiController(IAirportService airportService, IPageResultService pageResultService,
-            ISearchFlightRequestValidator validator, IMapper mapper)
+        public CustomerApiController(IFlightService flightService, IAirportService airportService,
+            IPageResultService pageResultService, IEnumerable<ISearchFlightRequestValidator> validators,
+            IMapper mapper)
         {
+            _flightService = flightService;
             _airportService = airportService;
             _pageResultService = pageResultService;
-            _validator = validator;
+            _validators = validators;
             _mapper = mapper;
         }
 
@@ -37,33 +41,23 @@ namespace FlightPlanner.Controllers
         [Route("api/flights/search"), HttpPost]
         public IHttpActionResult SearchFlights(SearchFlightsRequest request)
         {
-            if (!_validator.Validate(request))
-            {
+            if (!_validators.All(v => v.Validate(request)))
                 return BadRequest();
-            }
 
             var result = _pageResultService.GetPageResults(request);
             return Ok(result);
         }
        
 
-        //[Route("api/flights/{id}"), HttpGet]
-        //public IHttpActionResult FindFlightById(int id)
-        //{
-        //    lock (_locker)
-        //   {
-        //using (var ctx = new FlightPlannerDbContext())
-        //{
-        //    var flight = ctx.Flights.Include(f => f.From).Include(f => f.To).SingleOrDefault(f => f.Id == id);
+        [Route("api/flights/{id}"), HttpGet]
+        public IHttpActionResult FindFlightById(int id)
+        {
+            var flight = _flightService.GetFullFlight(id);
 
-        //    if (flight == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (flight == null)
+                return NotFound();
 
-        //    return Ok();
-        //}
-        //}
-        //}
+            return Ok(_mapper.Map(flight, new AddFlightResponse()));
+        }
     }
 }
