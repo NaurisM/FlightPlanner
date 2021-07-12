@@ -40,6 +40,7 @@ namespace FlightPlanner.DependencyResolution
             For(typeof(IEntityService<>)).Use(typeof(EntityService<>));
             For<IFlightService>().Use<FlightService>();
             For<IAirportService>().Use<AirportService>();
+            For<IPageResultService>().Use<PageResultService>();
             For<IFlightPlannerDbContext>().Use<FlightPlannerDbContext>();
             For<IFlightRequestValidator>().Use<AirportCodesValidator>();
             For<IFlightRequestValidator>().Use<AirportFromValidator>();

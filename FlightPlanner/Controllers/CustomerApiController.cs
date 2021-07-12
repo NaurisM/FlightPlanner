@@ -10,13 +10,16 @@ namespace FlightPlanner.Controllers
     public class CustomerApiController : ApiController
     {
         private readonly IAirportService _airportService;
-        private readonly IFlightService _flightService;
+        private readonly IPageResultService _pageResultService;
+        private readonly ISearchFlightRequestValidator _validator;
         private readonly IMapper _mapper;
 
-        public CustomerApiController(IAirportService airportService, IFlightService flightService, IMapper mapper)
+        public CustomerApiController(IAirportService airportService, IPageResultService pageResultService,
+            ISearchFlightRequestValidator validator, IMapper mapper)
         {
             _airportService = airportService;
-            _flightService = flightService;
+            _pageResultService = pageResultService;
+            _validator = validator;
             _mapper = mapper;
         }
 
@@ -31,20 +34,18 @@ namespace FlightPlanner.Controllers
             return airportList.Count == 0 ? (IHttpActionResult) NotFound() : Ok(airportList);
         }
 
-        //[Route("api/flights/search"), HttpPost]
-        //public IHttpActionResult SearchFlights(SearchFlightsRequest request)
-        //{
-        //lock (_locker)
-        //{
-        //if (SearchFlightsRequest.IsNotValid(request))
-        //{
-        //    return BadRequest();
-        //}
+        [Route("api/flights/search"), HttpPost]
+        public IHttpActionResult SearchFlights(SearchFlightsRequest request)
+        {
+            if (!_validator.Validate(request))
+            {
+                return BadRequest();
+            }
 
-        //var result = SearchFlightsRequest.ReturnPageResults(request);
-        //return Ok(/*result*/);
-        //}
-        //}
+            var result = _pageResultService.GetPageResults(request);
+            return Ok(result);
+        }
+       
 
         //[Route("api/flights/{id}"), HttpGet]
         //public IHttpActionResult FindFlightById(int id)

@@ -6,17 +6,6 @@
         public string To { get; set; }
         public string DepartureDate { get; set; }
 
-        //public static bool IsNotValid(SearchFlightsRequest flight)
-        //{
-        //    if (flight == null || flight.From == flight.To)
-        //    {
-        //        return true;
-        //    }
-
-          //  return string.IsNullOrEmpty(flight.From) ||
-          //  string.IsNullOrEmpty(flight.To) ||
-            //       string.IsNullOrEmpty(flight.DepartureDate);
-        //}
 
         //public static object ReturnPageResults(SearchFlightsRequest flightRequest)
         //{
