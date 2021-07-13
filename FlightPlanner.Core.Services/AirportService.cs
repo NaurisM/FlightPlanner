@@ -20,5 +20,11 @@ namespace FlightPlanner.Core.Services
                                               a.AirportCode.ToLower().Contains(search));
             return airports.ToList();
         }
+
+        public void DeleteAllAirports()
+        {
+            _context.Airports.RemoveRange(_context.Airports);
+            _context.SaveChanges();
+        }
     }
 }

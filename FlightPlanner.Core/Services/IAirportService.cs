@@ -6,5 +6,7 @@ namespace FlightPlanner.Core.Services
     public interface IAirportService : IEntityService<Airport>
     {
         IEnumerable<Airport> GetAirports(string search);
+
+        void DeleteAllAirports();
     }
 }

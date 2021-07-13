@@ -25,12 +25,6 @@ namespace FlightPlanner.Core.Services
             _context.SaveChanges();
         }
 
-        public void DeleteAllAirports()
-        {
-            _context.Airports.RemoveRange(_context.Airports);
-            _context.SaveChanges();
-        }
-
         public bool IsInDatabase(AddFlightRequest request)
         {
             return _context.Flights.Any(f =>

@@ -9,8 +9,6 @@ namespace FlightPlanner.Core.Services
 
         void DeleteAllFlights();
 
-        void DeleteAllAirports();
-
         bool IsInDatabase(AddFlightRequest request);
     }
 }

@@ -19,7 +19,7 @@ namespace FlightPlanner.Core.Services
 
             var matchingResults = GetFlightRequest(request);
             resultList.Items = matchingResults.ToArray();
-            resultList.TotalItems = matchingResults.Count;
+            resultList.TotalItems = matchingResults.Any() ? 1 : 0;
             resultList.Page = matchingResults.Any() ? 1 : 0;
             return resultList;
         }
